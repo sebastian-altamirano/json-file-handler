@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "license": "MIT",
+  "name": "json-file-handler",
+  "description": "A package for reading and writing JSON files",
+  "author": "Sebastián Altamirano",
+  "keywords": [
+    "json",
+    "file",
+    "promise",
+    "async"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "tests"
+  ],
+  "engines": {
+    "node": ">=v10.12.0"
+  },
+  "repository": "github:sebastian-altamirano/json-file-handler",
+  "bugs": "https://github.com/sebastian-altamirano/json-file-handler/issues",
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true",
+      "pre-commit": "pretty-quick --staged && npm run lint && npm test && npm run build"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts",
+    "test": "nyc ts-node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=jasmine.json",
+    "build": "tsc",
+    "docs": "typedoc  --out ./docs && touch ./docs/.nojekyll",
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/jasmine": "^3.5.9",
+    "@types/node": "^13.9.3",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jasmine": "^4.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-tsdoc": "^0.2.3",
+    "husky": "^4.2.3",
+    "jasmine": "^3.5.0",
+    "nyc": "^15.0.0",
+    "prettier": "^2.0.1",
+    "pretty-quick": "^2.0.1",
+    "ts-node": "^8.8.1",
+    "typedoc": "^0.17.3",
+    "typescript": "^3.8.3"
+  }
+}

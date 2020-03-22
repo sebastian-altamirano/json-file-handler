@@ -1,0 +1,11 @@
+{
+  "name": "JSON File Handler",
+  "includeVersion": true,
+  "excludeNotExported": true,
+  "inputFiles": ["./src/**/*"],
+  "ignoreCompilerErrors": true,
+  "listInvalidSymbolLinks": true,
+  "mode": "modules",
+  "theme": "default",
+  "readme": "none"
+}

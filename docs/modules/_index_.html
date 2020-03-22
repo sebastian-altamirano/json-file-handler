@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html class="default no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>&quot;index&quot; | JSON File Handler - v1.0.0</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+  </head>
+  <body>
+    <header>
+      <div class="tsd-page-toolbar">
+        <div class="container">
+          <div class="table-wrap">
+            <div
+              class="table-cell"
+              id="tsd-search"
+              data-index="../assets/js/search.js"
+              data-base=".."
+            >
+              <div class="field">
+                <label
+                  for="tsd-search-field"
+                  class="tsd-widget search no-caption"
+                  >Search</label
+                >
+                <input id="tsd-search-field" type="text" />
+              </div>
+              <ul class="results">
+                <li class="state loading">Preparing search index...</li>
+                <li class="state failure">The search index is not available</li>
+              </ul>
+              <a href="../index.html" class="title"
+                >JSON File Handler - v1.0.0</a
+              >
+            </div>
+            <div class="table-cell" id="tsd-widgets">
+              <div id="tsd-filter">
+                <a
+                  href="#"
+                  class="tsd-widget options no-caption"
+                  data-toggle="options"
+                  >Options</a
+                >
+                <div class="tsd-filter-group">
+                  <div class="tsd-select" id="tsd-filter-visibility">
+                    <span class="tsd-select-label">All</span>
+                    <ul class="tsd-select-list">
+                      <li data-value="public">Public</li>
+                      <li data-value="protected">Public/Protected</li>
+                      <li data-value="private" class="selected">All</li>
+                    </ul>
+                  </div>
+                  <input type="checkbox" id="tsd-filter-inherited" checked />
+                  <label class="tsd-widget" for="tsd-filter-inherited"
+                    >Inherited</label
+                  >
+                  <input type="checkbox" id="tsd-filter-externals" checked />
+                  <label class="tsd-widget" for="tsd-filter-externals"
+                    >Externals</label
+                  >
+                </div>
+              </div>
+              <a href="#" class="tsd-widget menu no-caption" data-toggle="menu"
+                >Menu</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tsd-page-title">
+        <div class="container">
+          <ul class="tsd-breadcrumb">
+            <li>
+              <a href="../index.html">Globals</a>
+            </li>
+            <li>
+              <a href="_index_.html">&quot;index&quot;</a>
+            </li>
+          </ul>
+          <h1>Module &quot;index&quot;</h1>
+        </div>
+      </div>
+    </header>
+    <div class="container container-main">
+      <div class="row">
+        <div class="col-8 col-content">
+          <section class="tsd-panel tsd-comment">
+            <div class="tsd-comment tsd-typography">
+              <div class="lead">
+                <p>
+                  Contains functions for manipulating JSON files asynchronously
+                  using the File System module from NodeJS.
+                </p>
+              </div>
+              <p>
+                Only the main functions are exported. Functions not exported are
+                abstractions of steps from the main functions.
+              </p>
+              <p>
+                Functions must be passed an absolute file path to behave as
+                expected.
+              </p>
+              <p>
+                Functions that requires an optional intentation level parameter
+                don&#39;t check its value. It&#39;s used by
+                <code>JSON.stringify</code> and therefore, if the value is less
+                than 1 no formatting is done, and if it&#39;s greater than 10,
+                the indentation is just 10.
+              </p>
+              <p>When a function fails it returns a rejected Promise with:</p>
+              <ul>
+                <li>
+                  An intance of
+                  <a
+                    href="../classes/_models_classes_.jsonfilehandlererror.html"
+                    >JSONFileHandlerError</a
+                  >
+                  if it was caused by a misuse of the function, for example,
+                  when trying to write something that is not an object to a JSON
+                  file, or when trying to read a file that doesn&#39;t exists
+                </li>
+                <li>
+                  An instance of <code>Error</code> (actually is of
+                  <a
+                    href="https://nodejs.org/api/errors.html#errors_class_systemerror"
+                    ><code>SystemError</code></a
+                  >, but Node does not exposes the class so it can not be
+                  checked using the <code>instanceof</code> operator) if it was
+                  caused by violating an operating system constraint, like:
+                  <ul>
+                    <li>Trying to modify a read-only file</li>
+                    <li>
+                      Trying to create or modify a file inside a read-only
+                      directory
+                    </li>
+                    <li>
+                      Trying to modify a file that requires elevated privileges
+                    </li>
+                    <li>Trying to work with many files at once</li>
+                    <li>
+                      Trying to modify a file and running out of space in the
+                      process
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section class="tsd-panel-group tsd-index-group">
+            <h2>Index</h2>
+            <section class="tsd-panel tsd-index-panel">
+              <div class="tsd-index-content">
+                <section class="tsd-index-section">
+                  <h3>Functions</h3>
+                  <ul class="tsd-index-list">
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a href="_index_.html#join" class="tsd-kind-icon">join</a>
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a href="_index_.html#overwrite" class="tsd-kind-icon"
+                        >overwrite</a
+                      >
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a href="_index_.html#read" class="tsd-kind-icon">read</a>
+                    </li>
+                  </ul>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section class="tsd-panel-group tsd-member-group">
+            <h2>Functions</h2>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="join" class="tsd-anchor"></a>
+              <h3><span class="tsd-flag ts-flagConst">Const</span> join</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  join<span class="tsd-signature-symbol">(</span>filePath<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  jsonContent<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">object</span>,
+                  indentationLevel<span class="tsd-signature-symbol">?: </span
+                  ><span class="tsd-signature-type">number</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">void</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L205"
+                          >src/index.ts:205</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Merges a given content with the content of a JSON file,
+                        or creates a new one if it does not exists.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        filePath: <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            The absolute path where the file is or will be
+                            located
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        jsonContent:
+                        <span class="tsd-signature-type">object</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            The object to be merged or written to the JSON file
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        <span class="tsd-flag ts-flagDefault value"
+                          >Default value</span
+                        >
+                        indentationLevel:
+                        <span class="tsd-signature-type">number</span
+                        ><span class="tsd-signature-symbol"> = 2</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            How much space to use for indentation when
+                            formatting
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">void</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                  <p>A promise that joins or creates the file when resolved</p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="overwrite" class="tsd-anchor"></a>
+              <h3>
+                <span class="tsd-flag ts-flagConst">Const</span> overwrite
+              </h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  overwrite<span class="tsd-signature-symbol">(</span
+                  >filePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  jsonContent<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">object</span>,
+                  indentationLevel<span class="tsd-signature-symbol">?: </span
+                  ><span class="tsd-signature-type">number</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">void</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L157"
+                          >src/index.ts:157</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Overwrites the content of an existing JSON file, or
+                        creates a new one if it doesn&#39;t exist.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        filePath: <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            The absolute path where the file is or will be
+                            located
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        jsonContent:
+                        <span class="tsd-signature-type">object</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>The object to be written to the JSON file</p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        <span class="tsd-flag ts-flagDefault value"
+                          >Default value</span
+                        >
+                        indentationLevel:
+                        <span class="tsd-signature-type">number</span
+                        ><span class="tsd-signature-symbol"> = 2</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            How much space to use for indentation when
+                            formatting
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">void</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                  <p>
+                    A promise that overwrites or creates the file when resolved
+                  </p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="read" class="tsd-anchor"></a>
+              <h3><span class="tsd-flag ts-flagConst">Const</span> read</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  read<span class="tsd-signature-symbol">(</span>filePath<span
+                    class="tsd-signature-symbol"
+                    >: </span
+                  ><span class="tsd-signature-type">string</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">object</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L177"
+                          >src/index.ts:177</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>Returns the content of a JSON file.</p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        filePath: <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>The absolute path where the file is located</p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">object</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                  <p>A promise resolved with the content</p>
+                </li>
+              </ul>
+            </section>
+          </section>
+        </div>
+        <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+          <nav class="tsd-navigation primary">
+            <ul>
+              <li class="globals">
+                <a href="../index.html"><em>Globals</em></a>
+              </li>
+              <li class="current tsd-kind-module">
+                <a href="_index_.html">&quot;index&quot;</a>
+              </li>
+              <li class="tsd-kind-module">
+                <a href="_models_classes_.html">&quot;models/classes&quot;</a>
+              </li>
+              <li class="tsd-kind-module">
+                <a href="_models_enums_.html">&quot;models/enums&quot;</a>
+              </li>
+              <li class="tsd-kind-module">
+                <a href="_utils_.html">&quot;utils&quot;</a>
+              </li>
+            </ul>
+          </nav>
+          <nav class="tsd-navigation secondary menu-sticky">
+            <ul class="before-current">
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a href="_index_.html#join" class="tsd-kind-icon">join</a>
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a href="_index_.html#overwrite" class="tsd-kind-icon"
+                  >overwrite</a
+                >
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a href="_index_.html#read" class="tsd-kind-icon">read</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <footer class="with-border-bottom">
+      <div class="container">
+        <h2>Legend</h2>
+        <div class="tsd-legend-group">
+          <ul class="tsd-legend">
+            <li class="tsd-kind-function">
+              <span class="tsd-kind-icon">Function</span>
+            </li>
+          </ul>
+          <ul class="tsd-legend">
+            <li class="tsd-kind-enum">
+              <span class="tsd-kind-icon">Enumeration</span>
+            </li>
+          </ul>
+          <ul class="tsd-legend">
+            <li class="tsd-kind-class">
+              <span class="tsd-kind-icon">Class</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div class="container tsd-generator">
+      <p>
+        Generated using
+        <a href="https://typedoc.org/" target="_blank">TypeDoc</a>
+      </p>
+    </div>
+    <div class="overlay"></div>
+    <script src="../assets/js/main.js"></script>
+    <script>
+      if (location.protocol == 'file:')
+        document.write('<script src="../assets/js/search.js"><' + '/script>');
+    </script>
+  </body>
+</html>

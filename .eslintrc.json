@@ -1,0 +1,33 @@
+{
+  "env": {
+    "node": true,
+    "es2020": true,
+    "jasmine": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["jasmine", "eslint-plugin-tsdoc"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:promise/recommended",
+    "plugin:jasmine/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "rules": {
+    "no-warning-comments": [
+      "error",
+      { "terms": ["todo", "fixme"], "location": "anywhere" }
+    ],
+    "no-console": "error",
+    "jasmine/no-spec-dupes": [1, "branch"],
+    "tsdoc/syntax": "error"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  }
+}

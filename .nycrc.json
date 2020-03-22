@@ -1,0 +1,10 @@
+{
+  "extension": [".ts"],
+  "reporter": ["text", "lcov"],
+  "branches": 95,
+  "lines": 95,
+  "functions": 95,
+  "statements": 95,
+  "check-coverage": true,
+  "exclude": ["**/*.spec.ts", "src/models/**"]
+}
