@@ -15,6 +15,7 @@ Create or manipulate JSON files with asynchronous `read`, `write` and `join` (us
 - [Examples](#examples)
   - [Reading](#reading)
   - [Joining and Overwriting](#joining-and-overwriting)
+- [API Documentation](#api-documentation)
 - [FAQ](#faq)
 
 ## Installation
