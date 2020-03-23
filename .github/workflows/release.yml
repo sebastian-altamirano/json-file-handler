@@ -27,7 +27,6 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install the dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: Format the code using Prettier
         run: npm run format
@@ -44,6 +43,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
+      - name: Cache node modules
+        id: cache
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       - name: Install the dependencies
         run: npm ci
       - name: Build the source code
