@@ -1,5 +1,6 @@
 # JSON File Handler
 
+[![npm version](https://badge.fury.io/js/json-file-handler.svg)](https://badge.fury.io/js/json-file-handler)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 Create or manipulate JSON files with asynchronous `read`, `write` and `join` (using an object) operations.
@@ -178,6 +179,10 @@ const newSettings = {
 };
 updateSettingsFile(settingsFilePath, newSettings);
 ```
+
+## API Documentation
+
+API documentation can be read at [https://sebastian-altamirano.github.io/json-file-handler/](https://sebastian-altamirano.github.io/json-file-handler/).
 
 ## FAQ
 
