@@ -1,5 +1,6 @@
 # JSON File Handler
 
+![CI/CD workflow status](https://github.com/sebastian-altamirano/json-file-handler/workflows/CI/CD%20Workflow/badge.svg)
 [![npm version](https://badge.fury.io/js/json-file-handler.svg)](https://badge.fury.io/js/json-file-handler)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
