@@ -25,8 +25,12 @@
   "husky": {
     "hooks": {
       "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true",
-      "pre-commit": "pretty-quick --staged && npm run lint && npm test && npm run build"
+      "pre-commit": "npm run format && npm run lint && npm test && npm run build"
     }
+  },
+  "release": {
+    "extends": "@jedmao/semantic-release-npm-github-config",
+    "branch": "master"
   },
   "config": {
     "commitizen": {
@@ -34,16 +38,17 @@
     }
   },
   "scripts": {
+    "format": "pretty-quick --staged",
     "lint": "eslint . --ext .ts",
     "test": "nyc ts-node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=jasmine.json",
     "build": "tsc",
-    "docs": "typedoc  --out ./docs && touch ./docs/.nojekyll",
-    "prepublishOnly": "npm run lint && npm run test && npm run build"
+    "docs": "typedoc  --out ./docs && touch ./docs/.nojekyll"
   },
   "dependencies": {
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
+    "@jedmao/semantic-release-npm-github-config": "^1.0.9",
     "@types/jasmine": "^3.5.9",
     "@types/node": "^13.9.3",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
@@ -61,6 +66,7 @@
     "nyc": "^15.0.0",
     "prettier": "^2.0.1",
     "pretty-quick": "^2.0.1",
+    "semantic-release": "^17.0.4",
     "ts-node": "^8.8.1",
     "typedoc": "^0.17.3",
     "typescript": "^3.8.3"
