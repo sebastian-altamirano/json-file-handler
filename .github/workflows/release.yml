@@ -9,7 +9,7 @@ jobs:
   ci:
     if: github.event_name == 'push' && contains(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     name: CI Flow
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node: [10, 12, 13]
@@ -38,7 +38,7 @@ jobs:
   cd:
     needs: ci
     name: CD Flow
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
