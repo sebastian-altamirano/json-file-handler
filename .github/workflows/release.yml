@@ -34,6 +34,11 @@ jobs:
         run: npm run lint
       - name: Run the test cases
         run: npm test
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: coverage/coverage-final.json
   cd:
     needs: ci
     name: CD Flow
@@ -55,6 +60,15 @@ jobs:
         run: npm ci
       - name: Build the source code
         run: npm run build
+      - name: Download coverage report
+        uses: actions/download-artifact@v1
+        with:
+          name: coverage
+      - name: Upload Codecov report
+        uses: codecov/codecov-action@v1
+        with:
+          file: coverage/coverage-final.json
+          fail_ci_if_error: true
       - name: Release new version to NPM
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
