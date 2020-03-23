@@ -14,8 +14,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "src",
-    "tests"
+    "src"
   ],
   "engines": {
     "node": ">=v10.12.0"
