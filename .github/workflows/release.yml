@@ -16,6 +16,10 @@ jobs:
         node: [10, 12, 13]
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lint commit messages
+        uses: wagoid/commitlint-github-action@v1
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}

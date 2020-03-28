@@ -23,8 +23,9 @@
   "bugs": "https://github.com/sebastian-altamirano/json-file-handler/issues",
   "husky": {
     "hooks": {
+      "pre-commit": "npm run format && npm run lint && npm test && npm run build",
       "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true",
-      "pre-commit": "npm run format && npm run lint && npm test && npm run build"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "release": {
@@ -47,6 +48,8 @@
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
     "@jedmao/semantic-release-npm-github-config": "^1.0.9",
     "@types/jasmine": "^3.5.9",
     "@types/node": "^13.9.3",
