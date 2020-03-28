@@ -2,11 +2,9 @@ name: CI/CD Workflow
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   ci:
