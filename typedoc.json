@@ -7,5 +7,6 @@
   "listInvalidSymbolLinks": true,
   "mode": "modules",
   "theme": "default",
-  "readme": "none"
+  "readme": "none",
+  "gitRevision": "master"
 }
