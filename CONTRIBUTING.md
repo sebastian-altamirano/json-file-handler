@@ -13,7 +13,7 @@ Whether you want to report a bug or suggest an enhancement, please do so using t
 
 If you want to report more than one bug, create one issue per bug.
 
-And don't forget to check if an issue already existed for whatever you want to report or suggest!
+And don't forget to check if an issue already exists for whatever you want to report or suggest!
 
 ## Sending a Pull Request
 
@@ -31,17 +31,29 @@ Now that you're ready to start, follow the next steps:
 
 ### Style Guide
 
-You don't have to worry about style conventions as a pre-commit hook is used to ensure that all commits respects a set of guidelines. Every time you commit your code will be:
+You don't have to worry about style conventions as multiple git hooks are set up to run at specific events.
 
-- Formatted using [Prettier](https://github.com/prettier/prettier)
-- Linted using [ESLint](https://github.com/eslint/eslint)
-- Tests will be executed
-- Source code will be compiled
+### Making a Commit (`pre-commit` hook)
 
-If any of those steps fail, your commit will be cancelled.
+When you are about to commit, a set of actions are performed to ensure that your code:
 
-#### Commit Message
+- Is formatted using Prettier
+- Doesn't have lint errors
+- Doesn't break the tests
+- Builds
 
-You neither have to worry about commit message conventions as [Commitizen](https://github.com/commitizen/cz-cli) is used for that purpose.
+### Writting the Commit Message (`prepare-commit-msg` hook)
 
-When you run `git commit`, pre-commit hook will be executed, and if it succeeds, Commitizen CLI will guide you through the commit message creation.
+If your code pass those steps then [Commitizen CLI](https://github.com/commitizen/cz-cli) is executed to guide you through the commit message creation. That way all the commits made to the repository will follow the same guidelines.
+
+### Linting the Commit Message (`commit-msg` hook)
+
+If you don't want to use Commitizen that's fine, [Commitlint](https://github.com/conventional-changelog/commitlint) is also used to ensure that all commits comply with the same set of rules that Commitizen would use.
+
+### Continuous Integration
+
+The same steps described above are also executed at the CI level. After a pull request is merged, if it triggers a release (is a breaking change, a feature, a bugfix, a refactor, a style change or a README update), the following things will happen:
+
+- A new version will be released to GitHub and NPM
+- `CHANGELOG.md` and docs will be updated
+- `package.json` and `package-lock.json` version will be upped
