@@ -5,11 +5,12 @@
     "jasmine": true
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["jasmine", "eslint-plugin-tsdoc"],
+  "plugins": ["jasmine", "eslint-plugin-tsdoc", "sonarjs"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:sonarjs/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
@@ -19,6 +20,7 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "sonarjs/prefer-immediate-return": "off",
     "no-warning-comments": [
       "error",
       { "terms": ["todo", "fixme"], "location": "anywhere" }

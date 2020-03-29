@@ -21,6 +21,7 @@ describe('helpers', () => {
   describe('addDirectoryToDeleteQueue', () => {
     it('should add directory to delete queue', () => {
       const deleteQueue: string[] = [];
+      // eslint-disable-next-line sonarjs/no-duplicate-string
       const directoryPath = '/home/sebastian/';
       const expectedDeleteQueue = [directoryPath];
 
