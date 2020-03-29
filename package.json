@@ -6,9 +6,15 @@
   "author": "Sebastián Altamirano",
   "keywords": [
     "json",
-    "file",
     "promise",
-    "async"
+    "promises",
+    "async",
+    "await",
+    "file",
+    "read",
+    "write",
+    "join",
+    "merge"
   ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
