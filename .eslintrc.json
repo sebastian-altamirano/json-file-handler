@@ -15,7 +15,8 @@
     "plugin:import/typescript",
     "plugin:promise/recommended",
     "plugin:jasmine/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "no-warning-comments": [
