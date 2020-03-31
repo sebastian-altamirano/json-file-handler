@@ -45,7 +45,7 @@
     "test": "nyc ts-node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=jasmine.json",
     "build": "tsc",
     "docs": "typedoc --out ./docs && touch ./docs/.nojekyll",
-    "prepublishOnly": "npm run docs && npx pretty-quick docs"
+    "postversion": "npm run docs && npx pretty-quick docs"
   },
   "dependencies": {
     "deepmerge": "^4.2.2"
