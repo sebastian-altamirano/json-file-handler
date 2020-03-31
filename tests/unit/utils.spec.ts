@@ -45,6 +45,15 @@ describe('JSON Handler Utils', () => {
 
       expect(result).toBeFalse();
     });
+
+    it('should fail with undefined', () => {
+      // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+      const undefinedValue: undefined = undefined;
+
+      const result = isAnObject(undefinedValue);
+
+      expect(result).toBeFalse();
+    });
   });
 
   describe('isAValidJsonString', () => {
