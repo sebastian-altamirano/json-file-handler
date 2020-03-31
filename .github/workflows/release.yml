@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [master]
 
+env:
+  CI: true
+
 jobs:
   ci:
     if: github.event_name == 'push' && contains(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
