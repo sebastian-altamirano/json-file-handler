@@ -30,7 +30,6 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run format && npm run lint && npm test && npm run build",
-      "prepare-commit-msg": "exec < /dev/tty && npx git-cz --hook || true",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -40,6 +39,7 @@
     }
   },
   "scripts": {
+    "cm": "npx git-cz",
     "format": "pretty-quick --staged",
     "lint": "eslint . --ext .ts",
     "test": "nyc ts-node node_modules/jasmine/bin/jasmine.js JASMINE_CONFIG_PATH=jasmine.json",
