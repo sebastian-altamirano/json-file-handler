@@ -157,7 +157,8 @@ const updateSettingsFile = async (settingsFilePath, newSettings) => {
   } catch (error) {
     switch (error.code) {
       case 'NOT_A_VALID_OBJECT':
-        // The file is empty
+        // The object to be joined is not an object (it's a function, an array,
+        // null or undefined)
         break;
       case 'EPERM':
         // The file requires elevated privileges to be written
