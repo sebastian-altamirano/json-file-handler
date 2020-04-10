@@ -163,7 +163,10 @@ export const overwrite = async (
     return write(filePath, jsonContent, indentationLevel);
   }
 
-  const notAValidObjectError = new JSONFileHandlerError('NOT_A_VALID_OBJECT');
+  const notAValidObjectError = new JSONFileHandlerError(
+    'NOT_A_VALID_OBJECT',
+    filePath
+  );
   return Promise.reject(notAValidObjectError);
 };
 
@@ -183,11 +186,11 @@ export const read = async (filePath: string): Promise<object> => {
   }
 
   if (stringifiedJsonContent.length === 0) {
-    const emptyFileError = new JSONFileHandlerError('EMPTY_FILE');
+    const emptyFileError = new JSONFileHandlerError('EMPTY_FILE', filePath);
     return Promise.reject(emptyFileError);
   }
 
-  const notAJsonError = new JSONFileHandlerError('NOT_A_JSON');
+  const notAJsonError = new JSONFileHandlerError('NOT_A_JSON', filePath);
   return Promise.reject(notAJsonError);
 };
 
@@ -223,7 +226,10 @@ export const join = async (
     }
   }
 
-  const notAValidObjectError = new JSONFileHandlerError('NOT_A_VALID_OBJECT');
+  const notAValidObjectError = new JSONFileHandlerError(
+    'NOT_A_VALID_OBJECT',
+    filePath
+  );
   return Promise.reject(notAValidObjectError);
 };
 
