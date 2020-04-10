@@ -17,6 +17,20 @@ import fs from 'fs';
 import path from 'path';
 
 describe('helpers', () => {
+  const absoluteDistFolderPath = path.resolve(__dirname, 'dist');
+  let createdFiles: string[] = [];
+  let createdDirectories: string[] = [];
+
+  beforeAll(() => fs.mkdirSync(absoluteDistFolderPath));
+
+  afterEach(() => {
+    deleteCreatedFilesAndDirectories(createdFiles, createdDirectories);
+    createdFiles = [];
+    createdDirectories = [];
+  });
+
+  afterAll(() => fs.rmdirSync(absoluteDistFolderPath));
+
   // This function does not check if the directory path to be added exists and
   // is in fact a directory, so a file path, or a non existent directory path
   // could be added
@@ -55,13 +69,6 @@ describe('helpers', () => {
   });
 
   describe('createMockFile', () => {
-    const createdFiles: string[] = [];
-    const createdDirectories: string[] = [];
-
-    afterAll(() =>
-      deleteCreatedFilesAndDirectories(createdFiles, createdDirectories)
-    );
-
     it('should create an empty file', () => {
       const filePath = './dist/empty-file.json';
       const absoluteFilePath = path.resolve(__dirname, filePath);

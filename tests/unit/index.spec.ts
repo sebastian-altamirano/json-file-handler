@@ -11,9 +11,24 @@ import {
   addDirectoryToDeleteQueue,
 } from '../helpers';
 
+import fs from 'fs';
 import path from 'path';
 
 describe('JSON File Handler', () => {
+  const absoluteDistFolderPath = path.resolve(__dirname, 'dist');
+  let createdFiles: string[] = [];
+  let createdDirectories: string[] = [];
+
+  beforeAll(() => fs.mkdirSync(absoluteDistFolderPath));
+
+  afterEach(() => {
+    deleteCreatedFilesAndDirectories(createdFiles, createdDirectories);
+    createdFiles = [];
+    createdDirectories = [];
+  });
+
+  afterAll(() => fs.rmdirSync(absoluteDistFolderPath));
+
   describe('read', () => {
     it('should read a valid JSON file', async () => {
       const validJsonPath = path.resolve(__dirname, './mocks/valid.json');
@@ -79,13 +94,6 @@ describe('JSON File Handler', () => {
   });
 
   describe('join', () => {
-    const createdFiles: string[] = [];
-    const createdDirectories: string[] = [];
-
-    afterAll(() =>
-      deleteCreatedFilesAndDirectories(createdFiles, createdDirectories)
-    );
-
     it('should create a new file', async () => {
       const nonExistentFilePath = path.resolve(
         __dirname,
@@ -255,13 +263,6 @@ describe('JSON File Handler', () => {
   });
 
   describe('overwrite', () => {
-    const createdFiles: string[] = [];
-    const createdDirectories: string[] = [];
-
-    afterAll(() =>
-      deleteCreatedFilesAndDirectories(createdFiles, createdDirectories)
-    );
-
     it('should create a new file', async () => {
       const nonExistentFilePath = path.resolve(
         __dirname,
