@@ -37,7 +37,6 @@ describe('helpers', () => {
   describe('addDirectoryToDeleteQueue', () => {
     it('should add directory to delete queue', () => {
       const deleteQueue: string[] = [];
-      // eslint-disable-next-line sonarjs/no-duplicate-string
       const directoryPath = '/home/sebastian/';
       const expectedDeleteQueue = [directoryPath];
 
@@ -70,58 +69,48 @@ describe('helpers', () => {
 
   describe('createMockFile', () => {
     it('should create an empty file', () => {
-      const filePath = './dist/empty-file.json';
-      const absoluteFilePath = path.resolve(__dirname, filePath);
+      const emptyFilePath = `${absoluteDistFolderPath}/empty-file.json`;
       const fileContent = '';
 
-      createMockFile(absoluteFilePath, fileContent);
-      createdFiles.push(absoluteFilePath);
-      const createdFileContent: Buffer = fs.readFileSync(absoluteFilePath);
+      createMockFile(emptyFilePath, fileContent);
+      createdFiles.push(emptyFilePath);
+      const createdFileContent: Buffer = fs.readFileSync(emptyFilePath);
       const stringifiedCreatedFileContent = String(createdFileContent);
 
       expect(stringifiedCreatedFileContent).toBe(fileContent);
     });
 
     it('should create a file with some content', () => {
-      const filePath = './dist/non-empty-file.txt';
-      const absoluteFilePath = path.resolve(__dirname, filePath);
+      const nonEmptyFilePath = `${absoluteDistFolderPath}/non-empty-file.txt`;
       const fileContent = 'I am not empty';
 
-      createMockFile(absoluteFilePath, fileContent);
-      createdFiles.push(absoluteFilePath);
-      const createdFileContent: Buffer = fs.readFileSync(absoluteFilePath);
+      createMockFile(nonEmptyFilePath, fileContent);
+      createdFiles.push(nonEmptyFilePath);
+      const createdFileContent: Buffer = fs.readFileSync(nonEmptyFilePath);
       const stringifiedCreatedFileContent = String(createdFileContent);
 
       expect(stringifiedCreatedFileContent).toBe(fileContent);
     });
 
     it('should create a file in a non existent directory', () => {
-      const filePath = './dist/new-folder/new-file.txt';
-      const absoluteFilePath = path.resolve(__dirname, filePath);
+      const emptyFilePath = `${absoluteDistFolderPath}/new-folder/new-file.txt`;
       const fileContent = '';
 
-      const absoluteDirectoryPath = createMockFile(
-        absoluteFilePath,
-        fileContent
-      );
-      createdFiles.push(absoluteFilePath);
+      const absoluteDirectoryPath = createMockFile(emptyFilePath, fileContent);
+      createdFiles.push(emptyFilePath);
       addDirectoryToDeleteQueue(createdDirectories, absoluteDirectoryPath);
-      const read = (): Buffer => fs.readFileSync(absoluteFilePath);
+      const read = (): Buffer => fs.readFileSync(emptyFilePath);
 
       expect(read).not.toThrow();
     });
 
     it('should return the directory name of the created file', () => {
-      const filePath = './dist/file.txt';
-      const absoluteFilePath = path.resolve(__dirname, filePath);
+      const emptyFilePath = `${absoluteDistFolderPath}/file.txt`;
       const fileContent = '';
 
-      const absoluteDirectoryPath = createMockFile(
-        absoluteFilePath,
-        fileContent
-      );
-      createdFiles.push(absoluteFilePath);
-      const expectedAbsoluteDirectoryPath = path.dirname(absoluteFilePath);
+      const absoluteDirectoryPath = createMockFile(emptyFilePath, fileContent);
+      createdFiles.push(emptyFilePath);
+      const expectedAbsoluteDirectoryPath = path.dirname(emptyFilePath);
 
       expect(absoluteDirectoryPath).toBe(expectedAbsoluteDirectoryPath);
     });
@@ -133,12 +122,11 @@ describe('helpers', () => {
     it('should delete the specified files and directories', () => {
       const createdFiles: string[] = [];
       const createdDirectories: string[] = [];
-      const filePaths = [
-        './dist/new-folder/new-file.txt',
-        './dist/new-folder-2/new-file-2.txt',
+      const absoluteFilePaths = [
+        `${absoluteDistFolderPath}/new-folder/new-file.txt`,
+        `${absoluteDistFolderPath}/new-folder-2/new-file-2.txt`,
       ];
-      filePaths.forEach((filePath) => {
-        const absoluteFilePath = path.resolve(__dirname, filePath);
+      absoluteFilePaths.forEach((absoluteFilePath: string) => {
         const absoluteDirectoryPath = createMockFile(absoluteFilePath, '');
         createdFiles.push(absoluteFilePath);
         addDirectoryToDeleteQueue(createdDirectories, absoluteDirectoryPath);
