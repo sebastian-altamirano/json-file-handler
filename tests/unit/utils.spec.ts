@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+
 import { isAnObject, isAValidJsonString } from '../../src/utils';
 
 describe('JSON Handler Utils', () => {

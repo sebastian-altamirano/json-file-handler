@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+
 import { read, join, overwrite } from '../../src/index';
 import {
   JSONFileHandlerErrorMessage,
@@ -9,37 +11,52 @@ import {
   addDirectoryToDeleteQueue,
 } from '../helpers';
 
+import fs from 'fs';
 import path from 'path';
 
 describe('JSON File Handler', () => {
+  const absoluteDistFolderPath = path.resolve(__dirname, 'dist');
+  let createdFiles: string[] = [];
+  let createdDirectories: string[] = [];
+
+  beforeAll(() => fs.mkdirSync(absoluteDistFolderPath));
+
+  afterEach(() => {
+    deleteCreatedFilesAndDirectories(createdFiles, createdDirectories);
+    createdFiles = [];
+    createdDirectories = [];
+  });
+
+  afterAll(() => fs.rmdirSync(absoluteDistFolderPath));
+
   describe('read', () => {
     it('should read a valid JSON file', async () => {
-      const validJsonPath = path.resolve(__dirname, './mocks/valid.json');
+      const jsonFilePath = path.resolve(__dirname, './mocks/valid.json');
 
-      const readPromise = read(validJsonPath);
+      const readPromise = read(jsonFilePath);
 
       await expectAsync(readPromise).toBeResolved();
     });
 
     it('should return the content of a JSON file', async () => {
-      const validJsonPath = path.resolve(__dirname, './mocks/valid.json');
+      const jsonFilePath = path.resolve(__dirname, './mocks/valid.json');
       const expectedJsonContent = {
         resX: 1920,
         resY: 1080,
       };
 
-      const jsonContent = await read(validJsonPath);
+      const jsonContent = await read(jsonFilePath);
 
       expect(jsonContent).toEqual(expectedJsonContent);
     });
 
     it('should read a valid JSON file without .json extension', async () => {
-      const validJsonPath = path.resolve(
+      const jsonFilePath = path.resolve(
         __dirname,
         './mocks/valid.json-not-json'
       );
 
-      const readPromise = read(validJsonPath);
+      const readPromise = read(jsonFilePath);
 
       await expectAsync(readPromise).toBeResolved();
     });
@@ -56,9 +73,12 @@ describe('JSON File Handler', () => {
     });
 
     it('should throw an error if the file is not a valid JSON file', async () => {
-      const invalidJsonPath = path.resolve(__dirname, './mocks/invalid.json');
+      const invalidJsonFilePath = path.resolve(
+        __dirname,
+        './mocks/invalid.json'
+      );
 
-      const readPromise = read(invalidJsonPath);
+      const readPromise = read(invalidJsonFilePath);
 
       await expectAsync(readPromise).toBeRejectedWithError(
         JSONFileHandlerErrorMessage.NOT_A_JSON
@@ -77,18 +97,8 @@ describe('JSON File Handler', () => {
   });
 
   describe('join', () => {
-    const createdFiles: string[] = [];
-    const createdDirectories: string[] = [];
-
-    afterAll(() =>
-      deleteCreatedFilesAndDirectories(createdFiles, createdDirectories)
-    );
-
     it('should create a new file', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/new-file.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/new-file.json`;
       const jsonContent = {
         name: 'John Doe',
         age: 33,
@@ -101,10 +111,7 @@ describe('JSON File Handler', () => {
     });
 
     it('should create a new file in a new directory', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/new-folder/new-file.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/new-folder/new-file.json`;
       const jsonContent = {
         name: 'John Doe',
         age: 33,
@@ -121,7 +128,7 @@ describe('JSON File Handler', () => {
     });
 
     it('should merge an object with the content of an existing file', async () => {
-      const nonExistentFilePath = path.resolve(__dirname, './dist/join.json');
+      const jsonFilePath = `${absoluteDistFolderPath}/join.json`;
       const jsonContent = {
         object: {
           a: 12,
@@ -133,8 +140,8 @@ describe('JSON File Handler', () => {
         },
         array: ['one', 'two'],
       };
-      await join(nonExistentFilePath, jsonContent);
-      createdFiles.push(nonExistentFilePath);
+      await join(jsonFilePath, jsonContent);
+      createdFiles.push(jsonFilePath);
       const contentToJoin = {
         object: {
           b: {
@@ -161,46 +168,40 @@ describe('JSON File Handler', () => {
         array: ['one', 'two', 'three', 'four'],
       };
 
-      await join(nonExistentFilePath, contentToJoin);
-      const fileContent = await read(nonExistentFilePath);
+      await join(jsonFilePath, contentToJoin);
+      const fileContent = await read(jsonFilePath);
 
       expect(fileContent).toEqual(expectedJsonContent);
     });
 
     it('should overwrite the content of an existing empty file', async () => {
-      const newEmptyFilePath = path.resolve(
-        __dirname,
-        './dist/join-empty.json'
-      );
-      createMockFile(newEmptyFilePath, '');
-      createdFiles.push(newEmptyFilePath);
+      const emptyFilePath = `${absoluteDistFolderPath}/join-empty.json`;
+      createMockFile(emptyFilePath, '');
+      createdFiles.push(emptyFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      await join(newEmptyFilePath, newJsonContent);
-      const fileContent = await read(newEmptyFilePath);
+      await join(emptyFilePath, newJsonContent);
+      const fileContent = await read(emptyFilePath);
 
       expect(fileContent).toEqual(newJsonContent);
     });
 
     it('should fail to merge the content of an existing invalid JSON file', async () => {
-      const newInvalidJsonFilePath = path.resolve(
-        __dirname,
-        './dist/join-invalid.json'
-      );
+      const invalidJsonFilePath = `${absoluteDistFolderPath}/join-invalid.json`;
       const invalidJsonContent = 'i am not a valid JSON content';
-      createMockFile(newInvalidJsonFilePath, invalidJsonContent);
-      createdFiles.push(newInvalidJsonFilePath);
+      createMockFile(invalidJsonFilePath, invalidJsonContent);
+      createdFiles.push(invalidJsonFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      const joinPromise = join(newInvalidJsonFilePath, newJsonContent);
+      const joinPromise = join(invalidJsonFilePath, newJsonContent);
 
       await expectAsync(joinPromise).toBeRejectedWithError(
         JSONFileHandlerErrorMessage.NOT_A_JSON
@@ -210,10 +211,7 @@ describe('JSON File Handler', () => {
     // No further testing is done in this field as `isAnObject` util takes care
     // of this and it's already well tested
     it('should fail with an invalid object', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/join-fail.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/join-fail.json`;
       const jsonContent = ['black', 'red', 'blue', 'orange'];
 
       const writePromise = join(nonExistentFilePath, jsonContent);
@@ -224,10 +222,7 @@ describe('JSON File Handler', () => {
     });
 
     it('should fail to merge the content of an object with the content of a read only file', async () => {
-      const newReadOnlyFilePath = path.resolve(
-        __dirname,
-        './dist/join-read-only.json'
-      );
+      const readOnlyFilePath = `${absoluteDistFolderPath}/join-read-only.json`;
       const jsonContent = {
         name: 'Jane Doe',
         age: 31,
@@ -235,36 +230,26 @@ describe('JSON File Handler', () => {
       };
       const stringifiedJsonContent = JSON.stringify(jsonContent);
       createMockFile(
-        newReadOnlyFilePath,
+        readOnlyFilePath,
         stringifiedJsonContent,
         FilePermission.readOnly
       );
-      createdFiles.push(newReadOnlyFilePath);
+      createdFiles.push(readOnlyFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      const joinPromise = join(newReadOnlyFilePath, newJsonContent);
+      const joinPromise = join(readOnlyFilePath, newJsonContent);
 
       await expectAsync(joinPromise).toBeRejected();
     });
   });
 
   describe('overwrite', () => {
-    const createdFiles: string[] = [];
-    const createdDirectories: string[] = [];
-
-    afterAll(() =>
-      deleteCreatedFilesAndDirectories(createdFiles, createdDirectories)
-    );
-
     it('should create a new file', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/new-file.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/new-file.json`;
       const jsonContent = {
         name: 'John Doe',
         age: 33,
@@ -277,10 +262,7 @@ describe('JSON File Handler', () => {
     });
 
     it('should create a new file in a new directory', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/new-folder/new-file.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/new-folder/new-file.json`;
       const jsonContent = {
         name: 'John Doe',
         age: 33,
@@ -297,72 +279,60 @@ describe('JSON File Handler', () => {
     });
 
     it('should overwrite the content of an existing file', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/overwrite.json'
-      );
+      const jsonFilePath = `${absoluteDistFolderPath}/overwrite.json`;
       const jsonContent = {
         name: 'John Doe',
         age: 33,
       };
-      await overwrite(nonExistentFilePath, jsonContent);
-      createdFiles.push(nonExistentFilePath);
+      await overwrite(jsonFilePath, jsonContent);
+      createdFiles.push(jsonFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      await overwrite(nonExistentFilePath, newJsonContent);
-      const fileContent = await read(nonExistentFilePath);
+      await overwrite(jsonFilePath, newJsonContent);
+      const fileContent = await read(jsonFilePath);
 
       expect(fileContent).toEqual(newJsonContent);
     });
 
     it('should overwrite the content of an existing empty file', async () => {
-      const newEmptyFilePath = path.resolve(
-        __dirname,
-        './dist/join-empty.json'
-      );
-      createMockFile(newEmptyFilePath, '');
-      createdFiles.push(newEmptyFilePath);
+      const emptyFilePath = `${absoluteDistFolderPath}/overwrite-empty.json`;
+      createMockFile(emptyFilePath, '');
+      createdFiles.push(emptyFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      await overwrite(newEmptyFilePath, newJsonContent);
-      const fileContent = await read(newEmptyFilePath);
+      await overwrite(emptyFilePath, newJsonContent);
+      const fileContent = await read(emptyFilePath);
 
       expect(fileContent).toEqual(newJsonContent);
     });
 
     it('should overwrite the content of an existing invalid JSON file', async () => {
-      const newInvalidJsonFilePath = path.resolve(
-        __dirname,
-        './dist/join-invalid.json'
-      );
+      const invalidJsonFilePath = `${absoluteDistFolderPath}/overwrite-invalid.json`;
       const invalidJsonContent = 'i am not a valid JSON content';
-      createMockFile(newInvalidJsonFilePath, invalidJsonContent);
-      createdFiles.push(newInvalidJsonFilePath);
+      createMockFile(invalidJsonFilePath, invalidJsonContent);
+      createdFiles.push(invalidJsonFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      await overwrite(newInvalidJsonFilePath, newJsonContent);
-      const fileContent = await read(newInvalidJsonFilePath);
+      await overwrite(invalidJsonFilePath, newJsonContent);
+      const fileContent = await read(invalidJsonFilePath);
 
       expect(fileContent).toEqual(newJsonContent);
     });
 
     it('should fail with an invalid object', async () => {
-      const nonExistentFilePath = path.resolve(
-        __dirname,
-        './dist/overwrite-fail.json'
-      );
+      const nonExistentFilePath = `${absoluteDistFolderPath}/overwrite-fail.json`;
       const jsonContent = ['black', 'red', 'blue', 'orange'];
 
       const writePromise = overwrite(nonExistentFilePath, jsonContent);
@@ -373,10 +343,7 @@ describe('JSON File Handler', () => {
     });
 
     it('should fail overwrite the content of a read only file', async () => {
-      const newReadOnlyFilePath = path.resolve(
-        __dirname,
-        './dist/join-read-only.json'
-      );
+      const readOnlyFilePath = `${absoluteDistFolderPath}/overwrite-read-only.json`;
       const jsonContent = {
         name: 'Jane Doe',
         age: 31,
@@ -384,18 +351,18 @@ describe('JSON File Handler', () => {
       };
       const stringifiedJsonContent = JSON.stringify(jsonContent);
       createMockFile(
-        newReadOnlyFilePath,
+        readOnlyFilePath,
         stringifiedJsonContent,
         FilePermission.readOnly
       );
-      createdFiles.push(newReadOnlyFilePath);
+      createdFiles.push(readOnlyFilePath);
       const newJsonContent = {
         name: 'Jane Doe',
         age: 31,
         height: 170,
       };
 
-      const overwritePromise = overwrite(newReadOnlyFilePath, newJsonContent);
+      const overwritePromise = overwrite(readOnlyFilePath, newJsonContent);
 
       await expectAsync(overwritePromise).toBeRejected();
     });
