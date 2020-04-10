@@ -22,6 +22,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: Lint commit messages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: wagoid/commitlint-github-action@v1
       - uses: actions/setup-node@v1
         with:
