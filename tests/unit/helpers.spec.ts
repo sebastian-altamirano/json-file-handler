@@ -5,6 +5,8 @@
  * @packageDocumentation
  */
 
+/* eslint-disable sonarjs/no-duplicate-string */
+
 import {
   addDirectoryToDeleteQueue,
   createMockFile,

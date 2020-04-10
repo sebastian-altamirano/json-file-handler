@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+
 import { read, join, overwrite } from '../../src/index';
 import {
   JSONFileHandlerErrorMessage,
