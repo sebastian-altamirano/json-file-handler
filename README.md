@@ -78,7 +78,7 @@ Writing functions (`overwrite`, `merge` and `join`) asks for an optional `indent
 
 ### Error Handling
 
-When the functions fails they return a rejected promise with an error that can either be an instance of `JSONFileHandlerError`, if the error was caused by a misuse of the library, or of `Error` (actually is of [`SystemError`](https://nodejs.org/api/errors.html#errors_class_systemerror), but Node does not exposes the class so it can not be checked using `instanceof` operator), if it was caused by violating an operating system constraint, like reading a file that does not exist, or trying to write to a read-only file.
+When the functions fails they return a rejected promise with an error that can either be an instance of `JSONFileHandlerError`, if the error was caused by a misuse of the library, or of `Error` (actually is of [`SystemError`](https://nodejs.org/api/errors.html#errors_class_systemerror), but Node doesn't exposes the class so it can't be checked using `instanceof` operator), if it was caused by violating an operating system constraint, like reading a file that doesn't exist, or trying to write to a read-only file.
 
 Both types of errors contain the properties `path` (useful when you want to know which file caused the error when you are merging two files or iterating) and `code`, that can be used to handle them.
 Bellow are the error codes that should be checked for each function, classified by kind:
@@ -133,7 +133,7 @@ readJSON(settingsFilePath)
         // The file is empty
         break;
       case 'NOT_A_JSON':
-        // The content of the file can not be read as JSON
+        // The content of the file can't be read as JSON
         break;
       case 'ENOENT':
         // The file you are trying to read doesn't exist
@@ -142,7 +142,7 @@ readJSON(settingsFilePath)
         // The file requires elevated privileges to be read
         break;
       case 'EMFILE':
-        // There are too many open file descriptors, so the file cannot be read
+        // There are too many open file descriptors, so the file can't be read
         // at this time
         break;
       case 'EISDIR':
@@ -174,7 +174,7 @@ const updateSettingsFile = async (settingsFilePath, newSettings) => {
         // The file requires elevated privileges to be written
         break;
       case 'EMFILE':
-        // There are too many open file descriptors, so the file can not be
+        // There are too many open file descriptors, so the file can't be
         // written at this time
         break;
       case 'EISDIR':

@@ -18,7 +18,7 @@
  * to a JSON file, or when trying to read a file that doesn't exists
  * - An instance of `Error` (actually is of
  * [`SystemError`](https://nodejs.org/api/errors.html#errors_class_systemerror),
- * but Node does not exposes the class so it can not be checked using the
+ * but Node doesn't exposes the class so it can't be checked using the
  * `instanceof` operator) if it was caused by violating an operating system
  * constraint, like:
  *   - Trying to modify a read-only file
