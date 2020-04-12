@@ -1526,7 +1526,8 @@
       return e;
     });
 })();
-var __extends =
+var typedoc,
+  __extends =
     (this && this.__extends) ||
     (function () {
       var extendStatics = function (d, b) {
@@ -1550,19 +1551,7 @@ var __extends =
               ? Object.create(b)
               : ((__.prototype = b.prototype), new __()));
       };
-    })(),
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc,
-  typedoc;
+    })();
 !(function (typedoc) {
   var services = [],
     components = [];
@@ -2035,7 +2024,6 @@ var __extends =
       typedoc.registerComponent(MenuHighlight, '.menu-highlight');
   })(typedoc || (typedoc = {})),
   (function (typedoc) {
-    var search;
     !(function (search) {
       var SearchLoadingState;
       !(function (SearchLoadingState) {
@@ -2070,56 +2058,32 @@ var __extends =
         }
         return (
           __extends(Search, _super),
-          (Search.prototype.createIndex = function (data) {
-            var _this = this,
-              builder = new lunr.Builder();
-            builder.pipeline.add(lunr.trimmer),
-              builder.field('name', { boost: 10 }),
-              builder.field('parent'),
-              builder.ref('id');
-            var rows = data.rows,
-              pos = 0,
-              length = rows.length,
-              batch = function () {
-                for (var cycles = 0; cycles++ < 100; )
-                  if ((builder.add(rows[pos]), ++pos == length))
-                    return (
-                      (_this.index = builder.build()),
-                      _this.setLoadingState(SearchLoadingState.Ready)
-                    );
-                setTimeout(batch, 10);
-              };
-            batch();
-          }),
           (Search.prototype.loadIndex = function () {
             var _this = this;
-            if (this.loadingState == SearchLoadingState.Idle)
-              if (
-                (setTimeout(function () {
-                  _this.loadingState == SearchLoadingState.Idle &&
-                    _this.setLoadingState(SearchLoadingState.Loading);
-                }, 500),
-                this.data)
-              )
-                this.createIndex(this.data);
-              else {
-                var url = this.el.dataset.index;
-                if (!url)
-                  return void this.setLoadingState(SearchLoadingState.Failure);
-                fetch(url)
-                  .then(function (response) {
-                    if (!response.ok)
-                      throw new Error('The source is not found');
-                    return response.text();
-                  })
-                  .then(function (source) {
-                    (_this.data = eval(source)),
-                      _this.data && _this.createIndex(_this.data);
-                  })
-                  .catch(function () {
-                    _this.setLoadingState(SearchLoadingState.Failure);
-                  });
-              }
+            if (this.loadingState == SearchLoadingState.Idle && !this.data) {
+              setTimeout(function () {
+                _this.loadingState == SearchLoadingState.Idle &&
+                  _this.setLoadingState(SearchLoadingState.Loading);
+              }, 500);
+              var url = this.el.dataset.index;
+              url
+                ? fetch(url)
+                    .then(function (response) {
+                      if (!response.ok)
+                        throw new Error('The search index is missing');
+                      return response.json();
+                    })
+                    .then(function (source) {
+                      (_this.data = source),
+                        (_this.index = lunr.Index.load(source.index)),
+                        _this.setLoadingState(SearchLoadingState.Ready);
+                    })
+                    .catch(function (error) {
+                      console.error(error),
+                        _this.setLoadingState(SearchLoadingState.Failure);
+                    })
+                : this.setLoadingState(SearchLoadingState.Failure);
+            }
           }),
           (Search.prototype.updateResults = function () {
             if (
@@ -2260,7 +2224,7 @@ var __extends =
       })(typedoc.Component);
       (search.Search = Search),
         typedoc.registerComponent(Search, '#tsd-search');
-    })((search = typedoc.search || (typedoc.search = {})));
+    })(typedoc.search || (typedoc.search = {}));
   })(typedoc || (typedoc = {})),
   (function (typedoc) {
     var SignatureGroup = (function () {
@@ -2294,16 +2258,14 @@ var __extends =
             _this.createGroups(),
             _this.container &&
               (_this.el.classList.add('active'),
-              _this.el
-                .querySelectorAll('.tsd-signature')
-                .forEach(function (signature) {
-                  signature.addEventListener('touchstart', function (event) {
-                    return _this.onClick(event);
-                  }),
-                    signature.addEventListener('click', function (event) {
-                      return _this.onClick(event);
-                    });
+              Array.from(_this.el.children).forEach(function (signature) {
+                signature.addEventListener('touchstart', function (event) {
+                  return _this.onClick(event);
                 }),
+                  signature.addEventListener('click', function (event) {
+                    return _this.onClick(event);
+                  });
+              }),
               _this.container.classList.add('active'),
               _this.setIndex(0)),
             _this
@@ -2333,19 +2295,15 @@ var __extends =
             }
           }),
           (Signature.prototype.createGroups = function () {
-            var _this = this,
-              signatures = this.el.querySelectorAll('.tsd-signature');
+            var signatures = this.el.children;
             if (!(signatures.length < 2)) {
               this.container = this.el.nextElementSibling;
-              var descriptions = this.container.querySelectorAll(
-                '.tsd-description'
-              );
-              (this.groups = []),
-                signatures.forEach(function (el, index) {
-                  _this.groups.push(
-                    new SignatureGroup(el, descriptions[index])
-                  );
-                });
+              var descriptions = this.container.children;
+              this.groups = [];
+              for (var index = 0; index < signatures.length; index++)
+                this.groups.push(
+                  new SignatureGroup(signatures[index], descriptions[index])
+                );
             }
           }),
           (Signature.prototype.onClick = function (e) {

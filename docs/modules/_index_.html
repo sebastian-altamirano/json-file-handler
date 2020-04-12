@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>&quot;index&quot; | JSON File Handler - v1.0.0</title>
-    <meta name="description" content="" />
+    <title>&quot;index&quot; | JSON File Handler - v1.1.0</title>
+    <meta
+      name="description"
+      content="Documentation for JSON File Handler - v1.1.0"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
@@ -16,7 +19,7 @@
             <div
               class="table-cell"
               id="tsd-search"
-              data-index="../assets/js/search.js"
+              data-index="../assets/js/search.json"
               data-base=".."
             >
               <div class="field">
@@ -32,7 +35,7 @@
                 <li class="state failure">The search index is not available</li>
               </ul>
               <a href="../index.html" class="title"
-                >JSON File Handler - v1.0.0</a
+                >JSON File Handler - v1.1.0</a
               >
             </div>
             <div class="table-cell" id="tsd-widgets">
@@ -126,7 +129,7 @@
                   <a
                     href="https://nodejs.org/api/errors.html#errors_class_systemerror"
                     ><code>SystemError</code></a
-                  >, but Node does not exposes the class so it can not be
+                  >, but Node doesn&#39;t exposes the class so it can&#39;t be
                   checked using the <code>instanceof</code> operator) if it was
                   caused by violating an operating system constraint, like:
                   <ul>
@@ -157,6 +160,11 @@
                   <ul class="tsd-index-list">
                     <li class="tsd-kind-function tsd-parent-kind-module">
                       <a href="_index_.html#join" class="tsd-kind-icon">join</a>
+                    </li>
+                    <li class="tsd-kind-function tsd-parent-kind-module">
+                      <a href="_index_.html#merge" class="tsd-kind-icon"
+                        >merge</a
+                      >
                     </li>
                     <li class="tsd-kind-function tsd-parent-kind-module">
                       <a href="_index_.html#overwrite" class="tsd-kind-icon"
@@ -205,8 +213,8 @@
                       <li>
                         Defined in
                         <a
-                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L205"
-                          >src/index.ts:205</a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L208"
+                          >src/index.ts:208</a
                         >
                       </li>
                     </ul>
@@ -214,8 +222,8 @@
                   <div class="tsd-comment tsd-typography">
                     <div class="lead">
                       <p>
-                        Merges a given content with the content of a JSON file,
-                        or creates a new one if it does not exists.
+                        Joins a given content to the content of a JSON file, or
+                        creates a new one if it doesn&#39;t exists.
                       </p>
                     </div>
                   </div>
@@ -272,7 +280,128 @@
                     ><span class="tsd-signature-type">void</span
                     ><span class="tsd-signature-symbol">&gt;</span>
                   </h4>
-                  <p>A promise that joins or creates the file when resolved</p>
+                  <p>
+                    A promise that joins the content or creates the file when
+                    resolved
+                  </p>
+                </li>
+              </ul>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module"
+            >
+              <a name="merge" class="tsd-anchor"></a>
+              <h3><span class="tsd-flag ts-flagConst">Const</span> merge</h3>
+              <ul
+                class="tsd-signatures tsd-kind-function tsd-parent-kind-module"
+              >
+                <li class="tsd-signature tsd-kind-icon">
+                  merge<span class="tsd-signature-symbol">(</span
+                  >firstFilePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  secondFilePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  mergedFilePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span>,
+                  indentationLevel<span class="tsd-signature-symbol">?: </span
+                  ><span class="tsd-signature-type">number</span
+                  ><span class="tsd-signature-symbol">)</span
+                  ><span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">Promise</span
+                  ><span class="tsd-signature-symbol">&lt;</span
+                  ><span class="tsd-signature-type">void</span
+                  ><span class="tsd-signature-symbol">&gt;</span>
+                </li>
+              </ul>
+              <ul class="tsd-descriptions">
+                <li class="tsd-description">
+                  <aside class="tsd-sources">
+                    <ul>
+                      <li>
+                        Defined in
+                        <a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L274"
+                          >src/index.ts:274</a
+                        >
+                      </li>
+                    </ul>
+                  </aside>
+                  <div class="tsd-comment tsd-typography">
+                    <div class="lead">
+                      <p>
+                        Merges the content of two JSON files into a third file,
+                        or duplicates one of the files if the other one is
+                        empty.
+                      </p>
+                    </div>
+                  </div>
+                  <h4 class="tsd-parameters-title">Parameters</h4>
+                  <ul class="tsd-parameters">
+                    <li>
+                      <h5>
+                        firstFilePath:
+                        <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>The absolute path of the first file</p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        secondFilePath:
+                        <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>The absolute path of the second file</p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        mergedFilePath:
+                        <span class="tsd-signature-type">string</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            The absolute path where the file is or will be
+                            located
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <h5>
+                        <span class="tsd-flag ts-flagDefault value"
+                          >Default value</span
+                        >
+                        indentationLevel:
+                        <span class="tsd-signature-type">number</span
+                        ><span class="tsd-signature-symbol"> = 2</span>
+                      </h5>
+                      <div class="tsd-comment tsd-typography">
+                        <div class="lead">
+                          <p>
+                            How much space to use for indentation when
+                            formatting
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <h4 class="tsd-returns-title">
+                    Returns <span class="tsd-signature-type">Promise</span
+                    ><span class="tsd-signature-symbol">&lt;</span
+                    ><span class="tsd-signature-type">void</span
+                    ><span class="tsd-signature-symbol">&gt;</span>
+                  </h4>
+                  <p>
+                    A promise that merges the files, or duplicates one of them,
+                    when resolved
+                  </p>
                 </li>
               </ul>
             </section>
@@ -408,8 +537,8 @@
                       <li>
                         Defined in
                         <a
-                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L177"
-                          >src/index.ts:177</a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/index.ts#L180"
+                          >src/index.ts:180</a
                         >
                       </li>
                     </ul>
@@ -468,6 +597,9 @@
             <ul class="before-current">
               <li class="tsd-kind-function tsd-parent-kind-module">
                 <a href="_index_.html#join" class="tsd-kind-icon">join</a>
+              </li>
+              <li class="tsd-kind-function tsd-parent-kind-module">
+                <a href="_index_.html#merge" class="tsd-kind-icon">merge</a>
               </li>
               <li class="tsd-kind-function tsd-parent-kind-module">
                 <a href="_index_.html#overwrite" class="tsd-kind-icon"

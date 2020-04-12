@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>JSONFileHandlerError | JSON File Handler - v1.0.0</title>
-    <meta name="description" content="" />
+    <title>JSONFileHandlerError | JSON File Handler - v1.1.0</title>
+    <meta
+      name="description"
+      content="Documentation for JSON File Handler - v1.1.0"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="../assets/css/main.css" />
   </head>
@@ -16,7 +19,7 @@
             <div
               class="table-cell"
               id="tsd-search"
-              data-index="../assets/js/search.js"
+              data-index="../assets/js/search.json"
               data-base=".."
             >
               <div class="field">
@@ -32,7 +35,7 @@
                 <li class="state failure">The search index is not available</li>
               </ul>
               <a href="../index.html" class="title"
-                >JSON File Handler - v1.0.0</a
+                >JSON File Handler - v1.1.0</a
               >
             </div>
             <div class="table-cell" id="tsd-widgets">
@@ -97,9 +100,9 @@
             <div class="tsd-comment tsd-typography">
               <div class="lead">
                 <p>
-                  Extends <code>Error</code> by adding a
-                  <code>code</code> property for ease of debugging, as
-                  <code>SystemError</code> also contains that property.
+                  Extends <code>Error</code> by adding the <code>code</code> and
+                  <code>path</code> properties that are present in
+                  <code>SystemError</code>.
                 </p>
               </div>
             </div>
@@ -165,6 +168,13 @@
                         >name</a
                       >
                     </li>
+                    <li class="tsd-kind-property tsd-parent-kind-class">
+                      <a
+                        href="_models_classes_.jsonfilehandlererror.html#path"
+                        class="tsd-kind-icon"
+                        >path</a
+                      >
+                    </li>
                     <li
                       class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"
                     >
@@ -207,6 +217,8 @@
                   ><span class="tsd-signature-symbol">typeof </span
                   ><span class="tsd-signature-type"
                     >JSONFileHandlerErrorMessage</span
+                  >, filePath<span class="tsd-signature-symbol">: </span
+                  ><span class="tsd-signature-type">string</span
                   ><span class="tsd-signature-symbol">)</span
                   ><span class="tsd-signature-symbol">: </span
                   ><a
@@ -223,8 +235,8 @@
                       <li>
                         Defined in
                         <a
-                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/models/classes.ts#L7"
-                          >src/models/classes.ts:7</a
+                          href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/models/classes.ts#L10"
+                          >src/models/classes.ts:10</a
                         >
                       </li>
                     </ul>
@@ -238,6 +250,11 @@
                         ><span class="tsd-signature-type"
                           >JSONFileHandlerErrorMessage</span
                         >
+                      </h5>
+                    </li>
+                    <li>
+                      <h5>
+                        filePath: <span class="tsd-signature-type">string</span>
                       </h5>
                     </li>
                   </ul>
@@ -325,6 +342,35 @@
                   </li>
                 </ul>
               </aside>
+            </section>
+            <section
+              class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"
+            >
+              <a name="path" class="tsd-anchor"></a>
+              <h3>path</h3>
+              <div class="tsd-signature tsd-kind-icon">
+                path<span class="tsd-signature-symbol">:</span>
+                <span class="tsd-signature-type">string</span>
+              </div>
+              <aside class="tsd-sources">
+                <ul>
+                  <li>
+                    Defined in
+                    <a
+                      href="https://github.com/sebastian-altamirano/json-file-handler/blob/master/src/models/classes.ts#L10"
+                      >src/models/classes.ts:10</a
+                    >
+                  </li>
+                </ul>
+              </aside>
+              <div class="tsd-comment tsd-typography">
+                <div class="lead">
+                  <p>
+                    The file that caused the error (useful when multiple files
+                    are manipulated)
+                  </p>
+                </div>
+              </div>
             </section>
             <section
               class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"
@@ -436,6 +482,13 @@
                       href="_models_classes_.jsonfilehandlererror.html#name"
                       class="tsd-kind-icon"
                       >name</a
+                    >
+                  </li>
+                  <li class="tsd-kind-property tsd-parent-kind-class">
+                    <a
+                      href="_models_classes_.jsonfilehandlererror.html#path"
+                      class="tsd-kind-icon"
+                      >path</a
                     >
                   </li>
                   <li
