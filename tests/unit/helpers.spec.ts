@@ -31,9 +31,9 @@ describe('helpers', () => {
 
   afterAll(() => fs.rmdirSync(absoluteDistFolderPath));
 
-  // This function does not check if the directory path to be added exists and
-  // is in fact a directory, so a file path, or a non existent directory path
-  // could be added
+  // This function doesn't check if the directory path to be added exists and is
+  // in fact a directory, so a file path, or a non existent directory path could
+  // be added
   describe('addDirectoryToDeleteQueue', () => {
     it('should add directory to delete queue', () => {
       const deleteQueue: string[] = [];

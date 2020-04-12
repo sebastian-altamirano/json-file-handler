@@ -18,7 +18,7 @@
  * to a JSON file, or when trying to read a file that doesn't exists
  * - An instance of `Error` (actually is of
  * [`SystemError`](https://nodejs.org/api/errors.html#errors_class_systemerror),
- * but Node does not exposes the class so it can not be checked using the
+ * but Node doesn't exposes the class so it can't be checked using the
  * `instanceof` operator) if it was caused by violating an operating system
  * constraint, like:
  *   - Trying to modify a read-only file
@@ -36,7 +36,7 @@ import { JSONFileHandlerError } from './models/classes';
 import fs from 'fs';
 import path from 'path';
 
-import merge from 'deepmerge';
+import deepMerge from 'deepmerge';
 
 /**
  * Checks if the directory where the file is or will be located exists.
@@ -163,7 +163,10 @@ export const overwrite = async (
     return write(filePath, jsonContent, indentationLevel);
   }
 
-  const notAValidObjectError = new JSONFileHandlerError('NOT_A_VALID_OBJECT');
+  const notAValidObjectError = new JSONFileHandlerError(
+    'NOT_A_VALID_OBJECT',
+    filePath
+  );
   return Promise.reject(notAValidObjectError);
 };
 
@@ -183,24 +186,24 @@ export const read = async (filePath: string): Promise<object> => {
   }
 
   if (stringifiedJsonContent.length === 0) {
-    const emptyFileError = new JSONFileHandlerError('EMPTY_FILE');
+    const emptyFileError = new JSONFileHandlerError('EMPTY_FILE', filePath);
     return Promise.reject(emptyFileError);
   }
 
-  const notAJsonError = new JSONFileHandlerError('NOT_A_JSON');
+  const notAJsonError = new JSONFileHandlerError('NOT_A_JSON', filePath);
   return Promise.reject(notAJsonError);
 };
 
 /**
- * Merges a given content with the content of a JSON file, or creates a new one
- * if it does not exists.
+ * Joins a given content to the content of a JSON file, or creates a new one
+ * if it doesn't exists.
  *
  * @param filePath - The absolute path where the file is or will be located
  * @param jsonContent - The object to be merged or written to the JSON file
  * @param indentationLevel - How much space to use for indentation when
  * formatting
  *
- * @returns A promise that joins or creates the file when resolved
+ * @returns A promise that joins the content or creates the file when resolved
  */
 export const join = async (
   filePath: string,
@@ -210,7 +213,7 @@ export const join = async (
   if (isAnObject(jsonContent)) {
     try {
       const currentJsonContent: object = await read(filePath);
-      const newJsonContent = merge<object>(currentJsonContent, jsonContent);
+      const newJsonContent = deepMerge<object>(currentJsonContent, jsonContent);
       return await write(filePath, newJsonContent, indentationLevel);
     } catch (error) {
       const fileIsEmpty = error.code === 'EMPTY_FILE';
@@ -223,12 +226,86 @@ export const join = async (
     }
   }
 
-  const notAValidObjectError = new JSONFileHandlerError('NOT_A_VALID_OBJECT');
+  const notAValidObjectError = new JSONFileHandlerError(
+    'NOT_A_VALID_OBJECT',
+    filePath
+  );
   return Promise.reject(notAValidObjectError);
+};
+
+/**
+ * Duplicates a JSON file.
+ *
+ * @param filePath - The absolute path of the file to be duplicated
+ * @param duplicatedFilePath - The absolute path where the file will be
+ * duplicated
+ * @param indentationLevel - How much space to use for indentation when
+ * formatting
+ *
+ * @returns A promise that duplicates the file when resolved
+ */
+const duplicate = async (
+  filePath: string,
+  duplicatedFilePath: string,
+  indentationLevel: number
+): Promise<void> => {
+  try {
+    const fileContent: object = await read(filePath);
+    return await write(duplicatedFilePath, fileContent, indentationLevel);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+/**
+ * Merges the content of two JSON files into a third file, or duplicates one of
+ * the files if the other one is empty.
+ *
+ * @param firstFilePath - The absolute path of the first file
+ * @param secondFilePath - The absolute path of the second file
+ * @param mergedFilePath - The absolute path where the file is or will be
+ * located
+ * @param indentationLevel - How much space to use for indentation when
+ * formatting
+ *
+ * @returns A promise that merges the files, or duplicates one of them, when
+ * resolved
+ */
+export const merge = async (
+  firstFilePath: string,
+  secondFilePath: string,
+  mergedFilePath: string,
+  indentationLevel = 2
+): Promise<void> => {
+  let firstFileContent: object;
+  try {
+    firstFileContent = await read(firstFilePath);
+    const secondFileContent: object = await read(secondFilePath);
+    const mergedContent: object = deepMerge<object>(
+      firstFileContent,
+      secondFileContent
+    );
+    return await write(mergedFilePath, mergedContent, indentationLevel);
+  } catch (error) {
+    if (error.code === 'EMPTY_FILE' && firstFilePath !== secondFilePath) {
+      if (error.path === secondFilePath) {
+        // If the the second file is empty, then the first file has content, so
+        // it's duplicated at `mergedFilePath` using `indentationLevel`
+        return write(mergedFilePath, firstFileContent, indentationLevel);
+      } else {
+        // But if the first file is empty, it's not guaranteed that the second
+        // file will have content, `duplicate` takes care of that condition
+        return duplicate(secondFilePath, mergedFilePath, indentationLevel);
+      }
+    } else {
+      return Promise.reject(error);
+    }
+  }
 };
 
 module.exports = {
   read,
   overwrite,
   join,
+  merge,
 };

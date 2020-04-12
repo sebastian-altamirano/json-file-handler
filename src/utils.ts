@@ -23,7 +23,7 @@ export function isAnObject(object: object): boolean {
  */
 export function isAValidJsonString(jsonString: string): boolean {
   try {
-    // Will throw given a string that can not be parsed into an object
+    // Will throw given a string that can't be parsed into an object
     const parsedJson = JSON.parse(jsonString);
     // But will not throw given a number, a boolean, null, undefined or the
     // stringification of any of these
