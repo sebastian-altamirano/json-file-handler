@@ -161,9 +161,8 @@ const path = require('path');
 
 const updateSettingsFile = async (settingsFilePath, newSettings) => {
   try {
-    const absoluteSettingsFilePath = path.resolve(__dirname, settingsFilePath);
     const fileIndentation = 4;
-    await joinJSON(absoluteSettingsFilePath, newSettings, fileIndentation);
+    await joinJSON(settingsFilePath, newSettings, fileIndentation);
   } catch (error) {
     switch (error.code) {
       case 'NOT_A_VALID_OBJECT':
@@ -184,7 +183,7 @@ const updateSettingsFile = async (settingsFilePath, newSettings) => {
   }
 };
 
-const settingsFilePath = '../config/settings.json';
+const settingsFilePath = path.resolve(__dirname, '../config/settings.json');
 const newSettings = {
   resX: 1920,
   rexY: 1080,
