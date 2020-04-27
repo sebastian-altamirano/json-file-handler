@@ -1,0 +1,110 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+
+env:
+  CI: true
+
+jobs:
+  lint-commit-messages:
+    if: "!contains(github.event.head_commit.message , '[skip-ci]')"
+    name: Lint commit messages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Lint
+        uses: wagoid/commitlint-github-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  lint-code:
+    if: "!contains(github.event.head_commit.message , '[skip-ci]')"
+    name: Lint code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: npm-cache
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: npm-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-progress --prefer-offline
+      - name: Lint
+        run: npm run lint
+
+  test:
+    if: "!contains(github.event.head_commit.message , '[skip-ci]')"
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10, 12, 14]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: npm-cache
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: npm-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-progress --prefer-offline
+      - name: Test
+        run: npm run test
+
+  build:
+    if: "!contains(github.event.head_commit.message , '[skip-ci]')"
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [10, 12, 14]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Cache node modules
+        uses: actions/cache@v1
+        id: cache
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: npm-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ env.cache-name }}-
+            npm-
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-progress --prefer-offline
+      - name: Build
+        run: npm run build
