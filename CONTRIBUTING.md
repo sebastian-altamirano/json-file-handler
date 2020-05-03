@@ -18,7 +18,7 @@ If you are unsure where to begin contributing, take a look at issues labeled [`g
 
 If you decide to fix an issue, please be sure to check the comment thread in case somebody is already working on a fix. If nobody is working on it at the moment, please leave a comment stating that you intend to work on it so other people don’t accidentally duplicate your effort.
 
-If there isn't an issue created for what you want to solve, create one before you start working on it. This is helpful in case your solution is not accepted, since the issue can still be tracked.
+If there isn't an issue created for what you want to solve, create one before you start working on it. This is helpful in case your solution is not accepted or the issue recurs, since the issue can be tracked.
 
 Now that you're ready to start, follow the next steps:
 
