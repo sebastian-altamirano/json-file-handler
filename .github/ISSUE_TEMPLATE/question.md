@@ -1,6 +1,6 @@
 ---
-name: ❓ Question
-about: Ask a question about how to use the library
+name: ❓ Support Request
+about: Ask a question or request support
 labels: 'question'
 ---
 
