@@ -15,7 +15,8 @@ Create or manipulate JSON files with asynchronous `read`, `write`, `merge` (two 
   - [Error Handling](#error-handling)
 - [Examples](#examples)
   - [Read](#read)
-  - [Join and Overwrite](#join-and-overwrite)
+  - [Overwrite](#overwrite)
+  - [Join](#join)
   - [Merge](#merge)
 - [API Documentation](#api-documentation)
 - [FAQ](#faq)
@@ -92,8 +93,16 @@ Bellow are the error codes that should be checked for each function, classified 
     - `'EPERM'`
     - `'EMFILE'`
     - `'EISDIR'`
-- `join` and `overwrite`
+- `overwrite`
   - `JSONFileHandlerError`
+    - `'NOT_A_VALID_OBJECT'`
+  - `SystemError`
+    - `'EPERM'`
+    - `'EMFILE'`
+    - `'EISDIR'`
+- `join`
+  - `JSONFileHandlerError`
+    - `'NOT_A_JSON'`
     - `'NOT_A_VALID_OBJECT'`
   - `SystemError`
     - `'EPERM'`
@@ -152,7 +161,39 @@ readJSON(settingsFilePath)
   });
 ```
 
-### Join and Overwrite
+### Overwrite
+
+```js
+import { overwrite as overwriteJSON } from 'json-file-handler';
+import { defaultSettings, settingsFilePath } from '@constants/settings';
+
+const resetSettingsFile = async (settingsFilePath) => {
+  try {
+    await overwriteJSON(settingsFilePath, defaultSettings);
+  } catch (error) {
+    switch (error.code) {
+      case 'NOT_A_VALID_OBJECT':
+        // The object to be joined is not an object (it's a function, an array,
+        // null or undefined)
+        break;
+      case 'EPERM':
+        // The file requires elevated privileges to be written
+        break;
+      case 'EMFILE':
+        // There are too many open file descriptors, so the file can't be
+        // written at this time
+        break;
+      case 'EISDIR':
+        // The given path is the path of an existing directory
+        break;
+    }
+  }
+};
+
+resetSettingsFile(settingsFilePath);
+```
+
+### Join
 
 ```js
 import { join as joinJSON } from 'json-file-handler';
@@ -165,6 +206,9 @@ const updateSettingsFile = async (settingsFilePath, newSettings) => {
     await joinJSON(settingsFilePath, newSettings, fileIndentation);
   } catch (error) {
     switch (error.code) {
+      case 'NOT_A_JSON':
+        // The content of the file can't be read as JSON
+        break;
       case 'NOT_A_VALID_OBJECT':
         // The object to be joined is not an object (it's a function, an array,
         // null or undefined)
