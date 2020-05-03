@@ -1,5 +1,5 @@
 ---
-name: Enhancement
+name: 🚀 Enhancement
 about: Suggest a feature or an enhancement
 labels: 'enhancement'
 ---
