@@ -2,22 +2,23 @@
 
 First of, thanks for the taking the time to contribute!
 
-You can contribute by:
-
-- Creating an issue if you have found a bug or want to suggest an enhancement. If that's the case, check if it was already created first
-- Making a pull request to fix a bug or submit an enhancement. Always make sure there's an issue created for what you want to solve, if not, create one
+You can contribute by [creating an issue](#creating-an-issue) or [making a pull request](#sending-a-pull-request).
 
 ## Creating an Issue
 
-Whether you want to report a bug or suggest an enhancement, please do so using the respecting [issue template](https://github.com/sebastian-altamirano/json-file-handler/issues/new/choose).
+Before opening an issue please check if a similar issue exists by [searching existing issues](https://github.com/sebastian-altamirano/json-file-handler/issues).
 
 If you want to report more than one bug, create one issue per bug.
 
-And don't forget to check if an issue already exists for whatever you want to report or suggest!
+If possible, provide code that demonstrates the issue.
 
 ## Sending a Pull Request
 
-Before starting to code, always make sure there's an issue created for what you want to solve, if not, create one.
+If you are unsure where to begin contributing, take a look at issues labeled [`good-first-issue`](https://github.com/sebastian-altamirano/json-file-handler/labels/good%20first%20issue) and [`help-wanted`](https://github.com/sebastian-altamirano/json-file-handler/labels/help%20wanted).
+
+If you decide to fix an issue, please be sure to check the comment thread in case somebody is already working on a fix. If nobody is working on it at the moment, please leave a comment stating that you intend to work on it so other people don’t accidentally duplicate your effort.
+
+If there isn't an issue created for what you want to solve, create one before you start working on it. This is helpful in case your solution is not accepted or the issue recurs, since the issue can be tracked.
 
 Now that you're ready to start, follow the next steps:
 
@@ -31,9 +32,11 @@ Now that you're ready to start, follow the next steps:
 
 ### Style Guide
 
-You don't have to worry about style conventions as multiple git hooks are set up to run at specific events.
+You don't have to worry about style conventions as git hooks are used to ensure that your code complies with the style conventions that the repository uses.
 
-### Making a Commit (`pre-commit` hook)
+When it's time to commit, use `git-cz` or `npm run cm` to commit using [Commitizen CLI](https://commitizen.github.io/cz-cli/), that way, your commits will respect the commit convention that the repository uses. If you don't want to use Commitizen that's fine, [Commitlint](https://github.com/conventional-changelog/commitlint) is also used to ensure that all commits comply with the same set of rules that Commitizen uses.
+
+#### Making a Commit (`pre-commit` hook)
 
 When you are about to commit, a set of actions are performed to ensure that your code:
 
@@ -42,18 +45,19 @@ When you are about to commit, a set of actions are performed to ensure that your
 - Doesn't break the tests
 - Builds
 
-### Writting the Commit Message (`prepare-commit-msg` hook)
+#### Linting the Commit Message (`commit-msg` hook)
 
-If your code pass those steps then [Commitizen CLI](https://github.com/commitizen/cz-cli) is executed to guide you through the commit message creation. That way all the commits made to the repository will follow the same guidelines.
-
-### Linting the Commit Message (`commit-msg` hook)
-
-If you don't want to use Commitizen that's fine, [Commitlint](https://github.com/conventional-changelog/commitlint) is also used to ensure that all commits comply with the same set of rules that Commitizen would use.
+As it was already said, even if you use Commitizen CLI, Commitlint will be used to lint your commit messages after you have written them.
 
 ### Continuous Integration
 
-The same steps described above are also executed at the CI level. After a pull request is merged, if it triggers a release (is a breaking change, a feature, a bugfix, a refactor, a style change or a README update), the following things will happen:
+The same steps described above are also executed at the CI level when you submit a pull request.
+
+### Continuous Delivery
+
+After a pull request is merged, if it triggers a release (includes a breaking change, a new feature, a bugfix, a refactor, a style change or a README update), the following things will happen:
 
 - A new version will be released to GitHub and NPM
 - `CHANGELOG.md` and docs will be updated
 - `package.json` and `package-lock.json` version will be upped
+- Code coverage will be updated
